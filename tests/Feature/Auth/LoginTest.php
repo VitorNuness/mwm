@@ -46,8 +46,8 @@ test('retrieve an message informing the authenticate failed', function () {
         'password' => 'simoni123',
     ]);
 
-    $response->assertInvalid([
-        'email' => 'O e-mail ou senha informados estão incorretos.',
+    $response->assertSessionHasErrors([
+        "login" => "O e-mail ou senha informados estão incorretos.",
     ]);
 });
 
