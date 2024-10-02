@@ -50,3 +50,17 @@ test('retrieve an message informing the authenticate failed', function () {
         'email' => 'O e-mail ou senha informados estão incorretos.',
     ]);
 });
+
+test('credentials validation', function ($field, $value, $message) {
+    $response = post('/login', [
+        $field => $value,
+    ]);
+
+    $response->assertInvalid([
+        $field => $message,
+    ]);
+})->with([
+    'email::required'    => ['email', '', 'Este campo deve ser preenchido.'],
+    'email::email'       => ['email', 'email.com', 'Preencha este campo com um e-mail válido.'],
+    'password::required' => ['password', '', 'Este campo deve ser preenchido.'],
+]);
