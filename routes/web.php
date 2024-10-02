@@ -8,8 +8,18 @@ Route::get('/', function () {
 });
 
 Route::post('/login', function (Request $request) {
-    Auth::attempt($request->only([
+    $credentials = $request->only([
         'email',
         'password',
-    ]));
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        return;
+    }
+
+    return back()->withErrors([
+        'email' => 'O e-mail ou senha informados estão incorretos.',
+    ])->onlyInput('email');
 });
