@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [AuthenticationController::class, 'store']);
+Route::get('/login', function () {})->name('login');

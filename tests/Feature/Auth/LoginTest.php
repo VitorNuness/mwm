@@ -1,6 +1,6 @@
 <?php
 
-use function Pest\Laravel\{assertAuthenticated, assertDatabaseCount, assertDatabaseHas, assertGuest, post, seed};
+use function Pest\Laravel\{assertAuthenticated, assertDatabaseCount, assertDatabaseHas, assertGuest, get, post, seed};
 
 beforeEach(function () {
     seed();
@@ -64,3 +64,8 @@ test('credentials validation', function ($field, $value, $message) {
     'email::email'       => ['email', 'email.com', 'Preencha este campo com um e-mail válido.'],
     'password::required' => ['password', '', 'Este campo deve ser preenchido.'],
 ]);
+
+it('should be access the route with login form', function () {
+    get(route('login'))
+        ->assertOk();
+});
