@@ -1,5 +1,7 @@
 <?php
 
+use Inertia\Testing\AssertableInertia;
+
 use function Pest\Laravel\{assertAuthenticated, assertDatabaseCount, assertDatabaseHas, assertGuest, get, post, seed};
 
 beforeEach(function () {
@@ -68,4 +70,10 @@ test('credentials validation', function ($field, $value, $message) {
 it('should be access the route with login form', function () {
     get(route('login'))
         ->assertOk();
+});
+
+it('should be render an login page', function () {
+    get(route('login'))
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('Auth/Login'));
 });
