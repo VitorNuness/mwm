@@ -1,7 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthenticationController;
+use Illuminate\Support\Facades\{Route};
+use Inertia\Inertia;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+Route::middleware('guest')->group(function () {
+    Route::post('/login', [AuthenticationController::class, 'store']);
+    Route::get('/login', function () {
+        return Inertia::render('Auth/Login');
+    })->name('login');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
 });
